@@ -53,11 +53,58 @@ INSTALLED_APPS = [
 ]
 ```
 
-#### Direktori Utama
+#### Konfigurasi URL
+URL dari index perlu ditambahkan agar ketika membuka halaman, akan terbuka `main.html`. Caranya adalah dengan mengubah `urls.py` pada direktori `game_inventory` sebagai berikut:
+```py
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', index, name='index')
+]
+```
 
+### 3. Implementasi Template
+#### Membuat Page Utama
+Buat direktori baru bernama `templates` dalam direktori utama, bukan direktori *project*. Setelah itu buat berkas baru bernama `main.html` yang isinya adalah halaman utama yang diinginkan. Untuk mendapatkan boilerplate, emmet abbreviation dapat dimanfaatkan dengan hanya menulis `html:5` lalu meng-klik *enter*.
+
+#### Membuat Model
+Untuk mengolah data, models dapat menampung sebuah *class* untuk menyimpan data tersebut. Pada *project* ini, data yang akan disimpan adalah *Item* dengan atribut nama, jumlah, tingkat kelangkaan, dan deskripsi yang implementasinya adalah sebagai berikut:
+```py
+from django.db import models
+
+# Create your models here.
+class Item(models.Model):
+    name = models.CharField(max_length=32)
+    amount = models.IntegerField()
+    rarity = models.IntegerField()
+    description = models.TextField()
+```
+
+#### Membuat View
+Untuk menampilkan `main.html`, diperlukan sebuah fungsi pada `view` untuk memberikan file HTML tersebut ke pengguna. Caranya adalah menambahkan fungsi berikut:
+```py
+from django.shortcuts import render
+from django.template import loader
+from django.http import HttpResponse
+
+def index(request):
+    template = loader.get_template('main.html')
+    return HttpResponse(template.render())
+```
+
+#### Melakukan Migrasi Model
+Migrasi model harus selalu dilakukan setiap kali ada perubahan yang dilakukan pada model. Perintah yang digunakan untuk melakukan migrasi adalah sebagai berikut:
+```
+python manage.py migrate
+```
 
 # Bagan
-# Alasan menggunakan virtual environment
+
+
+# Mengapa venv?
+Terdapat beberapa alasan khusus tentang penggunaan venv untuk pengembangan aplikasi Django, yaitu:
+- Pengelolaan *Dependency* — setiap *project* pasti memerlukan versi *package* yang berbeda. Oleh karena itu, agar setiap *project* memiliki *package* yang sesuai dengan versi yang sesuai, lebih baik untuk mengisolasikan *project* tersebut dari instalasi Python secara global.
+- Reprodusibilitas — ada kemungkinan bahwa *project* yang dijalankan di suatu komputer justru tidak bisa dijalankan di komputer lainnya. Penyebab utamanya adalah perbedaan versi dari *package* yang dimiliki. Dengan adanya venv, versi dari *package* yang digunakan setiap aplikasi sudah diatur sehingga kemungkinan tidak bisa dijalankan berkurang.
+
 # MVC, MVT, MVVM, dan Perbedaannya
 Pada pengembangan website, terdapat beberapa pola arsitektural yang dikembangkan oleh *developer* untuk membuat *project* lebih *scalable* dan mudah untuk di-*maintain*. Ketiga arsitektur yang akan dibahas kali ini adalah beberapa yang paling populer di antara arsitektur-arsitektur yang ada. Ketiganya memiliki dua komponen utama yang memiliki peran krusial dalam arsitektur:
 - **Model** — komponen inti dari arsitektur, merupakan struktur data dinamik milik aplikasi yang independen dari *user interface*. Secara langsung mengatur data, logika, dan peraturan dari aplikasi.
