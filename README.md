@@ -98,7 +98,7 @@ python manage.py migrate
 ```
 
 # Bagan
-
+![diagram](./imgs/diagram.png)  
 
 # Mengapa venv?
 Terdapat beberapa alasan khusus tentang penggunaan venv untuk pengembangan aplikasi Django, yaitu:

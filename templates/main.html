@@ -1,0 +1,31 @@
+{% load compress %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% compress css %}
+    <link rel="stylesheet" 
+        href="{% static 'src/output.css' %}">
+    {% endcompress %}
+</head>
+<body>
+    <header>
+        Ini header
+    </header>
+    <main class="container mx-auto">
+        <div>
+            <p>Game inventory</p>
+            <p>Belati Jagad Bintang Syuhada</p>
+            <p>2206081276</p>
+        </div>
+        <h1>test</h1>
+    </main>
+    <footer>
+        Ini footer
+    </footer>
+</body>
+</html>
