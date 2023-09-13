@@ -54,7 +54,7 @@ INSTALLED_APPS = [
 ```
 
 #### Konfigurasi URL
-URL dari index perlu ditambahkan agar ketika membuka halaman, akan terbuka `main.html`. Caranya adalah dengan mengubah `urls.py` pada direktori `game_inventory` sebagai berikut:
+URL dari index perlu ditambahkan agar ketika membuka halaman, akan terbuka `main.html`. Caranya adalah dengan mengubah `urls.py` pada direktori `main` sebagai berikut:
 ```py
 urlpatterns = [
     path('admin/', admin.site.urls),
